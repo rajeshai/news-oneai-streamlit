@@ -26,46 +26,21 @@ st.sidebar.markdown('© 2022 logo rights reserved to One AI')
 
 
 def run():
-    #@st.cache()
-    #def summary(text1):
-        #oneai.api_key = '1c93487c-695c-4089-adfc-5e4b7623718c'
-        #pipeline = oneai.Pipeline(steps=[oneai.skills.Summarize()])
-        #my_text = text1
-        #output = pipeline.run(my_text)
-        #return output.text
     
     @st.cache()
     def summary(text1):
         api_key = "1c93487c-695c-4089-adfc-5e4b7623718c"
         url = "https://api.oneai.com/api/v0/pipeline"
         text = text1
-        headers = {
-  "api-key": api_key, 
-  "content-type": "application/json"
-}
-        payload = {
-  "input": text,
-  "input_type": "article",
-  "steps": [
-        {
-          "skill": "summarize",
-          "params": {
-            "max_length": 100,
-					"auto_length": True,
-					"find_origins": True,
-					"min_length": 5
-          }
-        }
-    ]
-}
+        headers = {'api-key':api_key, 'content-type':'application/json'}
+        payload = {'input':text, 'input_type':'article', 'steps':[{'skill':'summarize'}]}
         r = requests.post(url, json=payload, headers=headers)
         data = r.json()
         return data['output'][0]['text']
 
-    #@st.cache(hash_funcs={_json.Scanner: my_hash_func})
-    def get_links(text1):
+    def get_links(text2):
         url = "https://free-news.p.rapidapi.com/v1/search"
-        querystring = {"q":text1,"lang":"en", "page":1, "page_size":5}
+        querystring = {"q":text2,"lang":"en", "page":1, "page_size":5}
         headers = {'x-rapidapi-host': "free-news.p.rapidapi.com",'x-rapidapi-key': "375ffbaab0mshb442ffb69d6f025p117ba0jsn01e8146148e3"}
         response = requests.request("GET", url, headers=headers, params=querystring)
         response_dict = json.loads(response.text)
