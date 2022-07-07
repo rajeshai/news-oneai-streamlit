@@ -15,13 +15,19 @@ st.title('Short Summary News Application Demo with OneAI')
 st.markdown('This application takes an input from the user and displays upto five latest news articles along with their summary. This application uses the free quota api calls.')
 st.sidebar.image('logo.jpg')
 st.sidebar.title('ONE AI')
-st.sidebar.markdown('[One AI](https://www.oneai.com/) is an API-first, language AI service built for developers. Embed our API to analyze, process, and transform text in your project.')
-
+st.sidebar.markdown('[One AI](https://www.oneai.com/) is an API-first, language AI service built for developers. Embed your API to analyze, process, and transform text in your project.')
+st.sidebar.markdown('''It can perform several tasks like
+- Sentiment Analysis
+- Named Entity Recognition
+- Topic Analysis
+- Text Summarization
+- Keyword Extraction
+There are several more tasks that One AI can do. Please find the below links to explore more about this:''')
 st.sidebar.markdown('[About us](https://www.oneai.com/about-us)')
 st.sidebar.markdown('[Documentation](https://studio.oneai.com/docs)')
 st.sidebar.markdown('[Contact](https://www.oneai.com/contact-us)')
 st.sidebar.markdown('[Community](https://discord.com/channels/941458663493746698/942326235722309642)')
-st.sidebar.markdown('© 2022 logo rights reserved to One AI')
+st.sidebar.markdown('© 2022 Logo rights reserved to One AI')
 
 
 
