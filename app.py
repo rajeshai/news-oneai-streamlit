@@ -65,6 +65,7 @@ def run():
                 news_article.parse()
                 st.image(news_article.top_image)
                 st.header(news_article.title)
+                st.markdown('*Summary of the Article:*')
                 st.markdown(summary(news_article.text))
                 with st.expander('Full Article'):
                     st.markdown(news_article.text)
