@@ -62,7 +62,7 @@ def run():
         data = r.json()
         return data['output'][0]['text']
 
-    @st.cache()
+    @st.cache(hash_funcs={_json.Scanner: my_hash_func})
     def get_links(text1):
         url = "https://free-news.p.rapidapi.com/v1/search"
         querystring = {"q":text1,"lang":"en", "page":1, "page_size":5}
