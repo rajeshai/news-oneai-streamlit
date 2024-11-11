@@ -24,7 +24,7 @@ A Streamlit web application that fetches recent news articles based on user quer
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/news-summarization-app.git
+git clone https://github.com/rajeshai/news-oneai-streamlit.git
 cd news-summarization-app
 ```
 
