@@ -2,6 +2,7 @@ import streamlit as st
 import json
 import requests
 from newspaper import Article
+from newsapi import NewsApiClient
 
 st.set_page_config(page_title='Short News App',
     layout = 'wide',
@@ -31,6 +32,9 @@ st.sidebar.markdown('[Community](https://discord.com/channels/941458663493746698
 st.sidebar.markdown('© 2022 Logo rights reserved to One AI')
 
 def run():
+    # Initialize NewsAPI client
+    newsapi = NewsApiClient(api_key='e07356679fcb40e98d44a37b323e9dd6')
+    
     @st.cache()
     def summary(text1):
         try:
@@ -43,7 +47,7 @@ def run():
                 'steps': [{'skill': 'summarize'}]
             }
             r = requests.post(url, json=payload, headers=headers)
-            r.raise_for_status()  # Raise an exception for bad status codes
+            r.raise_for_status()
             data = r.json()
             return data['output'][0]['text']
         except requests.exceptions.RequestException as e:
@@ -53,43 +57,23 @@ def run():
             st.error(f"Error processing One AI response: {str(e)}")
             return None
 
-    def get_links(text2):
+    def get_links(query):
         try:
-            url = "https://free-news.p.rapidapi.com/v1/search"
-            querystring = {
-                "q": text2,
-                "lang": "en",
-                "page": 1,
-                "page_size": 5
-            }
-            headers = {
-                'x-rapidapi-host': "free-news.p.rapidapi.com",
-                'x-rapidapi-key': "375ffbaab0mshb442ffb69d6f025p117ba0jsn01e8146148e3"
-            }
+            all_articles = newsapi.get_everything(q=query,
+                                                language='en',
+                                                sort_by='relevancy',
+                                                page_size=5,
+                                                page=1)
             
-            response = requests.request("GET", url, headers=headers, params=querystring)
-            response.raise_for_status()  # Raise an exception for bad status codes
-            
-            # Debug information
-            st.debug(f"API Response Status Code: {response.status_code}")
-            st.debug(f"API Response Text: {response.text[:500]}...")  # Show first 500 chars
-            
-            response_dict = response.json()
-            if 'articles' not in response_dict:
-                st.warning("No articles found in the API response")
+            if all_articles['status'] != 'ok':
+                st.error(f"NewsAPI Error: {all_articles.get('message', 'Unknown error')}")
                 return []
-                
-            links = [article['link'] for article in response_dict['articles']]
+            
+            links = [article['url'] for article in all_articles['articles']]
             return links
             
-        except requests.exceptions.RequestException as e:
+        except Exception as e:
             st.error(f"Error fetching news: {str(e)}")
-            return []
-        except json.JSONDecodeError as e:
-            st.error(f"Error parsing API response: {str(e)}")
-            return []
-        except KeyError as e:
-            st.error(f"Unexpected API response format: {str(e)}")
             return []
 
     input_text = st.text_input('Search your favorite topic:')
