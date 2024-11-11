@@ -1,5 +1,10 @@
 # News Summarization Application 📰
 
+[![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/downloads/)
+[![Streamlit](https://img.shields.io/badge/Streamlit-1.28.2-FF4B4B.svg)](https://streamlit.io)
+[![NewsAPI](https://img.shields.io/badge/NewsAPI-Client-orange.svg)](https://newsapi.org)
+[![OneAI](https://img.shields.io/badge/OneAI-API-green.svg)](https://www.oneai.com/)
+
 A Streamlit web application that fetches recent news articles based on user queries and provides AI-generated summaries using One AI's summarization capabilities. The app helps users stay informed by providing quick access to news with concise summaries.
 
 
